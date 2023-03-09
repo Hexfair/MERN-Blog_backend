@@ -3,7 +3,7 @@ import PostModel from '../models/Post.js';
 
 export const getAll = async (req, res) => {
 	try {
-		const posts = await PostModel.find().populate('user').exec();
+		const posts = await PostModel.find().populate('user', '_id fullName createdAt').exec();
 
 		res.json(posts);
 
