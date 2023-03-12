@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import multer from 'multer';
+import cors from 'cors';
 import { registerValidator, loginValidator, postCreateValidator } from './utils/validations.js';
 import checkAuth from './utils/checkAuth.js';
 import handleValidationErrors from './utils/handleValidationErrors.js';
@@ -17,6 +18,7 @@ mongoose
 /* Middleware */
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.use('/uploads', express.static('uploads'));
 
 /* Storage */
@@ -45,7 +47,7 @@ app.delete('/posts/:id', checkAuth, PostController.remove);
 app.patch('/posts/:id', checkAuth, postCreateValidator, handleValidationErrors, PostController.update);
 
 // Upload route
-app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+app.post('/upload', upload.single('image'), (req, res) => {
 	res.json({
 		url: `/uploads/${req.file.originalname}`,
 	})

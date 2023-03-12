@@ -17,7 +17,6 @@ export const register = async (req, res) => {
 		});
 
 		const user = await doc.save();
-
 		const token = jwt.sign(
 			{ _id: user._id },
 			'secret123',
